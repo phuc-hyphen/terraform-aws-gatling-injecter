@@ -187,8 +187,7 @@ resource "null_resource" "add-config" {
       "unzip configs.zip",
       "sudo chmod 777 configs/install-influxdb-gatling-ec2.sh",
       "./configs/install-influxdb-gatling-ec2.sh",
-      "pwd > location.txt",
-      "ls > ls.txt"
+      "rm -r configs.zip"
     ]
     connection {
       type        = "ssh"

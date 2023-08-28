@@ -37,19 +37,23 @@ Avant de commencer, assurez-vous d'avoir les prérequis suivants :
 
 ### Installation
 
-1. **Cloner le dépôt:**
+1.  **Cloner le dépôt:**
 
-    ```bash
-    git clone https://github.com/phuc-hyphen/terraform-aws-gatling-injecter.git
-    cd terraform-aws-project
-    ```
+        ```bash
+        git clone https://github.com/phuc-hyphen/terraform-aws-gatling-injecter.git
+        cd terraform-aws-project
+        ```
 
-2. **commands pour démarrer**
+    generation access key :
+    go to https://us-east-1.console.aws.amazon.com/iamv2/home#/security_credentials
+    in access key section > create access key
+
+2.  **commands pour démarrer**
 
     - terraform init
     - terraform plan
     - terraform apply -auto-approve
 
-3. **commands pour arreter**
+3.  **commands pour arreter**
 
     - terraform destroy -auto-approve
