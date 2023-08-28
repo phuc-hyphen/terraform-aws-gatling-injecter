@@ -50,10 +50,10 @@ Avant de commencer, assurez-vous d'avoir les prérequis suivants :
 
 2.  **commands pour démarrer**
 
-    - terraform init
-    - terraform plan
-    - terraform apply -auto-approve
+    -   terraform -chdir="terraform" init
+    -   terraform plan
+    -   terraform apply -auto-approve
 
 3.  **commands pour arreter**
 
-    - terraform destroy -auto-approve
+    -   terraform destroy -auto-approve

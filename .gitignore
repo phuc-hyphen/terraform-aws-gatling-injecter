@@ -1,4 +1,8 @@
 .terraform*
 main-key.pem
-terraform.tfstate
-terraform.tfvars
+terraform.tfstate.*
+*terraform.tfvars*
+credentials/*
+tempCodeRunnerFile.tfvars
+terraform.tfstate.backup
+go.mod

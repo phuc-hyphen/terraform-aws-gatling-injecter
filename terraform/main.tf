@@ -136,7 +136,7 @@ resource "aws_instance" "gatling-injecter-instance" {
     network_interface_id = aws_network_interface.web-server-nic.id
   }
 
-  user_data = file("bash/install-base-ec2.sh")
+  user_data = file("../bash/install-base-ec2.sh")
   tags = {
     Name = "web-server"
   }
@@ -158,9 +158,21 @@ output "grafana_url" {
 #   value = aws_instance.gatling-injecter-instance.id
 # }
 
+resource "null_resource" "create-config" {
+  # depends_on = [aws_instance.gatling-injecter-instance, null_resource.upload-file-configs]
+
+  provisioner "local-exec" {
+    command     = "powershell Compress-Archive ./configs/ configs.zip"
+    interpreter = ["PowerShell", "-Command"]
+
+  }
+}
+
 
 resource "null_resource" "upload-file-configs" {
-  depends_on = [aws_instance.gatling-injecter-instance]
+  # depends_on = [aws_instance.gatling-injecter-instance]
+  depends_on = [null_resource.create-config]
+
   provisioner "file" {
     source      = "configs.zip"
     destination = "configs.zip"
@@ -168,10 +180,9 @@ resource "null_resource" "upload-file-configs" {
     connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("main-key.pem")
-      # host        = aws_instance.gatling-injecter-instance.public_ip
-      host = aws_eip.one.public_ip
-      port = 22
+      private_key = file(var.key-main-path)
+      host        = aws_eip.one.public_ip
+      port        = 22
     }
   }
 
@@ -179,21 +190,22 @@ resource "null_resource" "upload-file-configs" {
 
 
 resource "null_resource" "add-config" {
-  depends_on = [aws_instance.gatling-injecter-instance, null_resource.upload-file-configs]
+  depends_on = [null_resource.upload-file-configs]
 
   provisioner "remote-exec" {
     inline = [
       # "echo hello"
       "unzip configs.zip",
-      "sudo chmod 777 configs/install-influxdb-gatling-ec2.sh",
-      "./configs/install-influxdb-gatling-ec2.sh",
+      "sudo chmod 777 configs/configs/install-influxdb-gatling-ec2.sh",
+      "./configs/configs/install-influxdb-gatling-ec2.sh",
       "rm -r configs.zip"
     ]
     connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("main-key.pem")
+      private_key = file(var.key-main-path)
       host        = aws_eip.one.public_ip
     }
   }
 }
+

@@ -23,8 +23,14 @@ variable "availability_zone" {
 variable "region" {
   type        = string
   default     = "us-east-1"
-  description = "EC2 availability zone"
+  description = "EC2 region zone"
 }
 
+
+variable "key-main-path" {
+  type        = string
+  default     = "../credentials/main-key.pem"
+  description = "path to main key "
+}
 
 
