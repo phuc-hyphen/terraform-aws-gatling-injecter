@@ -162,7 +162,8 @@ resource "null_resource" "create-config" {
   # depends_on = [aws_instance.gatling-injecter-instance, null_resource.upload-file-configs]
 
   provisioner "local-exec" {
-    command     = "powershell Compress-Archive ./configs/ configs.zip"
+    # command     = "pwd"
+    command     = "powershell Compress-Archive ../configs/ configs.zip -Update"
     interpreter = ["PowerShell", "-Command"]
 
   }
@@ -196,8 +197,8 @@ resource "null_resource" "add-config" {
     inline = [
       # "echo hello"
       "unzip configs.zip",
-      "sudo chmod 777 configs/configs/install-influxdb-gatling-ec2.sh",
-      "./configs/configs/install-influxdb-gatling-ec2.sh",
+      "sudo chmod 777 configs/install-influxdb-gatling-ec2.sh",
+      "./configs/install-influxdb-gatling-ec2.sh",
       "rm -r configs.zip"
     ]
     connection {
