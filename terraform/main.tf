@@ -195,9 +195,14 @@ resource "null_resource" "add-config" {
 
   provisioner "remote-exec" {
     inline = [
-      # "echo hello"
+      # "sudo yum -y install tree",
+      # "pwd",
+      # "ls",
       "unzip configs.zip",
+      "sudo yum install -y dos2unix",
+      "dos2unix ./configs/install-influxdb-gatling-ec2.sh",
       "sudo chmod 777 configs/install-influxdb-gatling-ec2.sh",
+      "tree",
       "./configs/install-influxdb-gatling-ec2.sh",
       "rm -r configs.zip"
     ]

@@ -21,8 +21,8 @@ EOF
 
 sudo yum install -y influxdb
 
-mv -f configs/configs/gatling.conf configs/configs/logback.xml gatling-bundle/conf/
-sudo mv -f configs/configs/influxdb.conf /etc/influxdb/
+mv -f configs/gatling.conf configs/logback.xml gatling-bundle/conf/
+sudo mv -f configs/influxdb.conf /etc/influxdb/
 
 sudo systemctl start influxdb
 sudo systemctl enable influxdb

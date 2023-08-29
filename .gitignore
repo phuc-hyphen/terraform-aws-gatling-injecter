@@ -6,3 +6,4 @@ credentials/*
 tempCodeRunnerFile.tfvars
 terraform.tfstate.backup
 go.mod
+go.sum
